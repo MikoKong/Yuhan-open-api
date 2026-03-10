@@ -29,6 +29,10 @@ p {
     p {
         font-size: 1em;
     }
+    input {
+        width: 80%;
+        font-size: 0.9em;
+    }
 }
 
 @media(max-width: 1024px) {
@@ -38,6 +42,9 @@ p {
     p {
         font-size: 1.05em;
     }
+    input {
+        width: 70%;
+    }
 }
 
 @media(min-width: 1025px) {
@@ -46,5 +53,9 @@ p {
     }
     p {
         font-size: 1.1em;
+    }
+    input {
+        width: 50%;
+        max-width: 280px;
     }
 }

@@ -15,18 +15,27 @@ document.getElementById('checkWeather').addEventListener('click', async() =>{
         const longitude = geoData.results[0].longitude;
         const userCityName = geoData.results[0].name;
 
-        const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=precipitation`);
+        const weatherResponse = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,precipitation`
+            );
         if(!weatherResponse.ok) {
             throw new Error(weatherResponse.status);
         }
         const weatherData = await weatherResponse.json();
 
-        const rain = weatherData.hourly.precipitation[0];
-        const temperature = weatherData.current_weather.temperature;
+        const rain = weatherData.current.precipitation;
+        const temperature = weatherData.current.temperature_2m;
 
         document.getElementById('location').textContent = `Location: ${userCityName}`;
         document.getElementById('rain').textContent = `Current rainfall: ${rain} mm`;
         document.getElementById('temperature').textContent = `Current temperature: ${temperature}°C`;
+
+        if(rain > 0) {
+            document.getElementById('umbrella').textContent = "☔ Don't forget to bring an umbrella!";
+            document.body.style.backgroundColor = "#7FA1C3";
+        } else {
+            document.getElementById('umbrella').textContent = "No rain today :)";
+        }
     } catch(error) {
         console.error(error);
     }
